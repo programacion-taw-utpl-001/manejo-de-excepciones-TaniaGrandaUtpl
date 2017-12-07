@@ -28,14 +28,11 @@ public class Principal {
         while(contador<=num_alumnno){
             //Excepcion para convetir los strings a double
             try{
-                //Ingreso de datos por teclado
-                Estudiante estudiante = new Estudiante();
-                leer.nextLine();
                 System.out.println("Ingrese el nombre:");
-                estudiante.setNombre(leer.nextLine());
+                String nombre = leer.nextLine();
                 System.out.println("Ingrese el apellido:");
-                estudiante.setApellido(leer.nextLine());
-                lista_estudiantes[contador] = estudiante;
+                String apellido = leer.nextLine();
+                lista_estudiantes[contador] = new Estudiante(nombre, apellido);
                 
                 System.out.println("Ingrese la nota de matematicas");
                 double mat = Double.parseDouble(leer.nextLine());
