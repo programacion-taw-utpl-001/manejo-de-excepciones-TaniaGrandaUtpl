@@ -5,25 +5,28 @@
  */
 package ejercicio1;
 
+import java.util.Scanner;
+
 /**
  *
  * @author Usuario
  */
 public class Asignacion {
-    Estudiante [] lista_persona;
+    //Atributos de la clase
+    Estudiante [] lista_alumnos;
     double [] notas_matematicas;
     double [] notas_sociales;
 
-    public Estudiante[] getLista_persona() {
-        return lista_persona;
+    //Metodos get y set
+    public Estudiante[] getLista_alumnos() {
+        return lista_alumnos;
     }
 
-    public void setLista_persona(Estudiante[] lista_persona) {
-        this.lista_persona = lista_persona;
+    public void setLista_persona(Estudiante[] lista_alumnos) {
+        this.lista_alumnos = lista_alumnos;
     }
 
-    public double[] getNotas_matematicas() { 
-
+    public double[] getNotas_matematicas() {
         return notas_matematicas;
     }
 
@@ -38,58 +41,68 @@ public class Asignacion {
     public void setNotas_sociales(double[] notas_sociales) {
         this.notas_sociales = notas_sociales;
     }
-
-    public Asignacion(Estudiante[] lista_persona, double[] notas_matematicas, double[] notas_sociales) {
-        this.lista_persona = lista_persona;
+    
+    //Constructor con 3 parametros
+    public Asignacion(Estudiante[] lista_alumnos, double[] notas_matematicas, double[] notas_sociales) {
+        this.lista_alumnos = lista_alumnos;
         this.notas_matematicas = notas_matematicas;
         this.notas_sociales = notas_sociales;
     }
-
-    public Asignacion() {
-    }
     
-    public void lista(){
-        String lista="";
-        for (int i = 0; i < 4; i++) {
-            lista = lista_persona[i].toString()+notas_matematicas[i]+notas_sociales[i];
-        }
-     
-    }
     
-    public double promedio_por_estudiante(){
-        double prom=0, suma=0;
-        double n, n2;
-        for (int i = 0; i < 4; i++) {
-            n = notas_matematicas[i];
-            n2 = notas_sociales[i];
-            suma=n+n2;
+    public double matematicas_promedio_general(){
+        double prom=0;
+        for(int i = 0; i < notas_matematicas.length; i++){
+            prom += notas_matematicas[i];//Vamos sumando nota por nota del arreglo notas_matematicas
         }
-        prom=suma/2;
+        prom =  prom / notas_matematicas.length;
         return prom;
     }
     
-    public void promedio_general_por_materia(){
-        double sumaM=0, promM=0, promE=0, sumaE=0;
-        for (int i = 0; i < notas_matematicas.length; i++) {
-            sumaM = sumaM+notas_matematicas[i];
+    public double sociales_promedio_general(){
+        double prom=0;
+        for(int i = 0; i < notas_sociales.length; i++){
+            prom += notas_sociales[i];//va sumando nota por nota del arreglo notas_sociales
         }
-        promM = sumaM/4;
-        for (int i = 0; i < notas_sociales.length; i++) {
-            sumaE = sumaE+notas_sociales[i];
-        }
-        promE = sumaE/4;
-        System.out.println("Promedio Matematicas: "+promM);
-        System.out.println("Promedio Sociales: "+promE);
+        prom =  prom / notas_sociales.length;
+        return prom;
     }
     
-    @Override
-    public String toString() {
-        String cadena = String.format("%s\n"
-                + "Matemáticas: %s\n"
-                + "Sociales: %s\n",getLista_persona(),getNotas_matematicas(), getNotas_sociales(),promedio_por_estudiante());
+    double promedio[];
+    public double[] promedio_por_alumno(){
+        this.promedio = new double [4];
+        for (int i = 0; i < promedio.length; i++) {
+            //llamamos a los atributos notas matematicas y sociales para realizar el promedio
+            this.promedio[i] = (this.notas_matematicas[i] + this.notas_sociales[i]) / 2;
+        }
+        return promedio;
+    }
+    
+    // Metodo toString
+    public String cadena_1(){
+        String cadena = "";
+        for (int i = 0; i < lista_alumnos.length; i++) {
+            cadena +=  String.format("%s\n"
+                    + "\tMatematicas: %.1f\n"
+                    + "\tSociales: %.1f\n"
+                    + "\tPromedio: %.1f\n\n", 
+                    getLista_alumnos()[i], 
+                    getNotas_matematicas()[i], 
+                    getNotas_sociales()[i], 
+                    promedio_por_alumno()[i]);
+        }
         return cadena;
     }
     
-    
-    
+    //Sobrescribimos el metodo toString
+    @Override
+    public String toString() {
+        return String.format("\n Reporte Final\n"
+                + "Lista Estudiantes\n"
+                + "%s\n"
+                + "Promedios generales\n\n"
+                + "Promedios de Matematicas: %.1f\n"
+                + "Promedios de Sociales: %.1f\n", cadena_1(), 
+                matematicas_promedio_general(), sociales_promedio_general());
+    }
 }

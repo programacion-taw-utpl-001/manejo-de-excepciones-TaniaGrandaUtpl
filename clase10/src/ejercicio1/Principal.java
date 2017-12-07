@@ -13,47 +13,51 @@ import java.util.Scanner;
  */
 public class Principal {
 
-    /**
-     * @param args the command line arguments
-     */
+    
     public static void main(String[] args) {
-        // TODO code application logic here
         Scanner leer = new Scanner(System.in);
-        double valor1=0, valor2=0;
-        int num_alumnno = 4;
-        int contador = 1;
-        Estudiante lista[] = new Estudiante[4];
-        double[] notas_matematicas = new double[4]; 
-        double[] notas_sociales = new double[4]; 
         
-        while(contador<4) {
-            
-            System.out.println("Ingrese el nombre:");
-            String nombre = leer.nextLine();
-            System.out.println("Ingrese el apellido:");
-            String apellido = leer.nextLine();
-            Estudiante es = new Estudiante(nombre, apellido);
-            
-                       
-            System.out.println("Ingrese su nota en la meteria de matematicas");
-            String mat = leer.nextLine();
-            
-            System.out.println("Ingrese su nota en la materia de sociales");
-            String soc = leer.nextLine();
-            
-            try {
-                valor1 = Double.parseDouble(mat);
-                valor2 = Double.parseDouble(soc);
-            } catch (NumberFormatException e) {
-                System.out.println(e);
+        int num_alumnno = 4;//numeros de alumnos y limite del arreglo
+        int contador = 1;//contador del while
+        
+        Estudiante lista_estudiantes[] = new Estudiante[num_alumnno]; //creacion y declaracion del arreglo
+        double[] notas_matematicas = new double[num_alumnno]; 
+        double[] notas_sociales = new double[num_alumnno]; 
+        
+        //ciclo repetitivo para ingresar los datos de cada alumnos
+        while(contador<=num_alumnno){
+            //Excepcion para convetir los strings a double
+            try{
+                //Ingreso de datos por teclado
+                Estudiante estudiante = new Estudiante();
+                leer.nextLine();
+                System.out.println("Ingrese el nombre:");
+                estudiante.setNombre(leer.nextLine());
+                System.out.println("Ingrese el apellido:");
+                estudiante.setApellido(leer.nextLine());
+                lista_estudiantes[contador] = estudiante;
+                
+                System.out.println("Ingrese la nota de matematicas");
+                double mat = Double.parseDouble(leer.nextLine());
+                notas_matematicas[contador] = mat;
+                System.out.println("Ingrese la nota de sociales");
+                double soc = Double.parseDouble(leer.nextLine());
+                notas_sociales[contador] = soc;
+                contador++;
+                
+            }catch(NumberFormatException e){
+                System.err.print(e);
+                //Para volver a pedir que el usuario ingrese un numero
+                System.out.println("La nota debe ser un numero");
             }
             
-            
-            
-            Asignacion asig = new Asignacion(lista, notas_matematicas, notas_sociales);
-            System.out.println(asig);
-            
         }
+        //Mostramos datos
+        Asignacion a = new Asignacion(lista_estudiantes, notas_matematicas, notas_sociales);
+        System.out.println(a);
+        
+        
+        
     }
     
 }
